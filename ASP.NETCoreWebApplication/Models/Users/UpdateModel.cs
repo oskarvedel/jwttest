@@ -1,4 +1,4 @@
-namespace ASP.NETCoreWebApplication.Helpers.Models.Users
+namespace ASP.NETCoreWebApplication.Models.Users
 {
   public class UpdateModel
     {
