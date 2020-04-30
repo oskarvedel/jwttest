@@ -1,4 +1,4 @@
-using ASP.NETCoreWebApplication.Helpers.Entities;
+using ASP.NETCoreWebApplication.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 

@@ -1,5 +1,5 @@
-using ASP.NETCoreWebApplication.Helpers.Entities;
-using ASP.NETCoreWebApplication.Helpers.Models.Users;
+using ASP.NETCoreWebApplication.Entities;
+using ASP.NETCoreWebApplication.Models.Users;
 using AutoMapper;
 
 namespace ASP.NETCoreWebApplication.Helpers

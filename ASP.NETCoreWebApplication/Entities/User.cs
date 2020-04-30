@@ -1,4 +1,4 @@
-namespace ASP.NETCoreWebApplication.Helpers.Entities
+namespace ASP.NETCoreWebApplication.Entities
 {
     public class User
     {
