@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
-using AutoMapper;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel;
-using WebApi.Helpers;
-using Microsoft.Extensions.Options;
-using System.Text;
-using Microsoft.IdentityModel.Tokens;
 using System.Security.Claims;
+using System.Text;
+using ASP.NETCoreWebApplication.Helpers;
+using ASP.NETCoreWebApplication.Helpers.Entities;
+using ASP.NETCoreWebApplication.Helpers.Models.Users;
+using ASP.NETCoreWebApplication.Helpers.Services;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
-using WebApi.Services;
-using WebApi.Entities;
-using WebApi.Models.Users;
-using System.IdentityModel.Tokens;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
-
-namespace WebApi.Controllers
+namespace ASP.NETCoreWebApplication.Pages.Controllers
 {
     [Authorize]
     [ApiController]

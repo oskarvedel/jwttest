@@ -1,8 +1,8 @@
+using ASP.NETCoreWebApplication.Helpers.Entities;
+using ASP.NETCoreWebApplication.Helpers.Models.Users;
 using AutoMapper;
-using WebApi.Entities;
-using WebApi.Models.Users;
 
-namespace WebApi.Helpers
+namespace ASP.NETCoreWebApplication.Helpers
 {
     public class AutoMapperProfile : Profile
     {

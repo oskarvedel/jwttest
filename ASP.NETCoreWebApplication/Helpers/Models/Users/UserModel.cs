@@ -1,4 +1,4 @@
-namespace WebApi.Models.Users
+namespace ASP.NETCoreWebApplication.Helpers.Models.Users
 {
   public class UserModel
     {

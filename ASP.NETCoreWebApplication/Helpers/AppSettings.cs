@@ -1,4 +1,4 @@
-namespace WebApi.Helpers
+namespace ASP.NETCoreWebApplication.Helpers
 {
     public class AppSettings
     {

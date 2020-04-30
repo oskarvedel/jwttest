@@ -1,8 +1,8 @@
+using ASP.NETCoreWebApplication.Helpers.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using WebApi.Entities;
 
-namespace WebApi.Helpers
+namespace ASP.NETCoreWebApplication.Helpers
 {
     public class DataContext : DbContext
     {
