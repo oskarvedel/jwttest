@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RCCS_Auth_Test_Project", "RCCS_Auth_Test_Project\RCCS_Auth_Test_Project.csproj", "{745ACE63-5CC0-4E7D-B1AE-67E23D31600C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{745ACE63-5CC0-4E7D-B1AE-67E23D31600C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{745ACE63-5CC0-4E7D-B1AE-67E23D31600C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{745ACE63-5CC0-4E7D-B1AE-67E23D31600C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{745ACE63-5CC0-4E7D-B1AE-67E23D31600C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
