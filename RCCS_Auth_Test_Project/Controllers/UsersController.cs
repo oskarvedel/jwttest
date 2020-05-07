@@ -13,7 +13,7 @@ using RCCS_Auth_Test_Project.Helpers;
 using RCCS_Auth_Test_Project.Models.Users;
 using RCCS_Auth_Test_Project.Services;
 
-namespace RCCS_Auth_Test_Project.Pages.Controllers
+namespace RCCS_Auth_Test_Project.Controllers
 {
     [Authorize]
     [ApiController]
