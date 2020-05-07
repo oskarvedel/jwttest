@@ -1,3 +1,4 @@
+/*
 import React, {Component} from 'react';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
@@ -83,3 +84,4 @@ class LoginPage extends React.Component {
 
 
 export { LoginPage }; 
+*/
