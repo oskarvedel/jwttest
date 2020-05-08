@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import axios from 'axios';
 
-export class LogIn extends React.Component {
+export class LogIn extends Component {
     constructor(props) {
         super(props);
         this.state = {value: ''};
@@ -40,7 +40,7 @@ export class LogIn extends React.Component {
         return (
             <form onSubmit={this.handleSubmit}>
                 <label>
-                    Name:
+                    Username:
                     <input type="text" name='username' value={this.state.username} onChange={this.handleChange}/>
                 </label>
                 <label>
