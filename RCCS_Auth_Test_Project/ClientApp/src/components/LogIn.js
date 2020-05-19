@@ -23,27 +23,30 @@ export class LogIn extends Component {
         };
 
         let userStringified = JSON.stringify(user);
-
-        const response = await fetch('/users/authenticate', {
+        const that = this;
+        fetch('/users/authenticate', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
             },
             body: userStringified
-        });
-        
-        if (response.ok) { // if HTTP-status is 200-299
-            // get the response body (the method explained below)
-            this.setState({UserLoggedIn: true});
-            let responseBody = response.text();
-            console.log(responseBody);
-            let token = responseBody.token;
-            console.log(token);
-            localStorage.setItem('loginToken', responseBody)
-        } else {
-            alert("HTTP-Error: " + response.status);
-        }
-        
+        })
+            .then(function (response) {
+                    if (response.ok) {
+                        response.json().then(function(data) {
+                            console.log(data["token"]);
+                            localStorage.setItem("token", data["token"]);
+                            console.log('Logged in');
+                            that.setState({
+                                UserLoggedIn: true
+                            });
+                        });
+                    } else {
+                        alert("HTTP-Error: " + response.status);
+                        console.log('Error - not logged in');
+                    }
+                }
+            ).catch(error => console.error('Caught error:', error));
     }
 
 
@@ -58,12 +61,12 @@ export class LogIn extends Component {
                         <form onSubmit={this.handleLogin}>
                             <label>
                                 Username:
-                                <input type="text" name='username' value={this.state.username}
+                                <input type="text" name='username' value={this.state.username || ""}
                                        onChange={this.handleChange}/>
                             </label>
                             <label>
                                 Password:
-                                <input type="password" name='password' value={this.state.password}
+                                <input type="password" name='password' value={this.state.password || ""}
                                        onChange={this.handleChange}/>
                             </label>
                             <input type="submit" value="Login"/>

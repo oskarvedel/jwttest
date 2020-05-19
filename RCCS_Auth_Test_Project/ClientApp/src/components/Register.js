@@ -35,7 +35,9 @@ export class Register extends Component {
         });
         if (response.ok) { // if HTTP-status is 200-299
             // get the response body (the method explained below)
-            this.setState({userCreatedSuccessfully: true});
+            this.setState({
+                userCreatedSuccessfully: true
+            });
         } else {
             alert("HTTP-Error: " + response.status);
         }
@@ -53,22 +55,22 @@ export class Register extends Component {
                         <form onSubmit={this.handleSubmit}>
                             <label>
                                 FirstName:
-                                <input type="text" name='firstname' value={this.state.firstname}
+                                <input type="text" name='firstname' value={this.state.firstname ||""}
                                        onChange={this.handleChange}/>
                             </label>
                             <label>
                                 LastName:
-                                <input type="text" name='lastname' value={this.state.lastname}
+                                <input type="text" name='lastname' value={this.state.lastname ||""}
                                        onChange={this.handleChange}/>
                             </label>
                             <label>
                                 Username:
-                                <input type="text" name='username' value={this.state.username}
+                                <input type="text" name='username' value={this.state.username ||""}
                                        onChange={this.handleChange}/>
                             </label>
                             <label>
                                 Password:
-                                <input type="password" name='password' value={this.state.password}
+                                <input type="password" name='password' value={this.state.password ||""}
                                        onChange={this.handleChange}/>
                             </label>
                             <input type="submit" value="Submit"/>
