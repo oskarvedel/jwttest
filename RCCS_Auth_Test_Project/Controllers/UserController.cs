@@ -17,32 +17,26 @@ using static BCrypt.Net.BCrypt;
 
 namespace RCCS_Auth_Test_Project.Controllers
 {
-    /// <summary>
-    /// Use this API to login and change password.
-    /// </summary>
     [Route("api/[controller]")]
     [ApiController]
     [Authorize]
-    public class UsersController : ControllerBase
+    public class UserController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
         private readonly AppSettings _appSettings;
 
-        public UsersController(ApplicationDbContext context,
+        public UserController(ApplicationDbContext context,
             IOptions<AppSettings> appSettings)
         {
             _context = context;
             _appSettings = appSettings.Value;
         }
 
-        /// <summary>
-        /// You must login before you can use any other api call.
-        /// </summary>
-        /// <param name="login"></param>
-        /// <returns></returns>
+        // POST: api/user/login
         [HttpPost("login"), AllowAnonymous]
         public async Task<ActionResult<Token>> Login([FromBody] Login login)
         {
+            Console.WriteLine("user trying to log in");
             if (login != null) //check if email, username and password were entered
             {
                 //find user by personaleId

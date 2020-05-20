@@ -26,13 +26,13 @@ export class LogIn extends Component {
         event.preventDefault();
 
         let user = {
-            userName: this.state.personaleId,
+            personaleId: this.state.personaleId,
             password: this.state.password
         };
 
         let userStringified = JSON.stringify(user);
         const that = this;
-        fetch('api/user/login', {
+        fetch('/api/User/Login', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"

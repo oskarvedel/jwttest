@@ -25,7 +25,7 @@ namespace RCCS_Auth_Test_Project
 
         public Startup(IWebHostEnvironment env, IConfiguration configuration)
         {
-            _env = env;
+            //_env = env;
             Configuration = configuration;
         }
 
@@ -34,9 +34,7 @@ namespace RCCS_Auth_Test_Project
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllersWithViews();
-            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
-
+            //services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddCors();
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -69,19 +67,19 @@ namespace RCCS_Auth_Test_Project
                 });
             // Add swagger Web.API documentation
             // Doc: https://docs.microsoft.com/da-dk/aspnet/core/tutorials/web-api-help-pages-using-swagger?view=aspnetcore-3.1
-            /*services.AddSwaggerGen(c =>
+            services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "RCCS",
+                    Title = "GUI Assignment 3 Models",
                     Version = "v1",
-                    Description = "RCCS User Api"
+                    Description = "API to manage models."
                 });
                 // Set the comments path for the Swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
-            });*/
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -91,23 +89,40 @@ namespace RCCS_Auth_Test_Project
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
+
+            app.UseHttpsRedirection();
+
+            // Configure cors
+            app.UseCors(x => x
+                //.AllowAnyOrigin() // Not allowed together with AllowCredential
+                //.WithOrigins("http://localhost:8080", "http://localhost:5000" )
+                .SetIsOriginAllowed(x => _ = true)
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .AllowCredentials()
+            );
+
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
             {
-                app.UseExceptionHandler("/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Models API V1");
+                c.RoutePrefix = string.Empty; // To serve the Swagger UI at the app's root
+            });
 
-            app.UseHttpsRedirection();
+            app.UseRouting();
 
-            // migrate any database changes on startup (includes initial db creation)
-            context.Database.Migrate();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
-            app.UseHttpsRedirection();
-            app.UseStaticFiles();
-            app.UseSpaStaticFiles();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
 
-            app.UseSpa(spa =>
+            DbUtilities.SeedUsers(context);
+
+            /*app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
 
@@ -115,34 +130,7 @@ namespace RCCS_Auth_Test_Project
                 {
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
-            });
-
-            // global cors policy
-            app.UseCors(x => x
-                .SetIsOriginAllowed(x => _ = true)
-                .AllowAnyMethod()
-                .AllowAnyHeader()
-                .AllowCredentials());
-
-            /*app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Models API V1");
-                c.RoutePrefix = "/swagger"; // where to serve swagger
             });*/
-
-            app.UseRouting();
-            app.UseAuthentication();
-            app.UseAuthorization();
-
-            app.UseEndpoints(endpoints =>
-            {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller}/{action=Index}/{id?}");
-            });
-
-            DbUtilities.SeedUsers(context);
         }
     }
 }

@@ -25,7 +25,7 @@ namespace RCCS_Auth_Test_Project.Data
                 new EfUser
                 {
                     PersonaleId = "Admin",
-                    PwHash = HashPassword("imtheadmin", BcryptWorkfactor),
+                    PwHash = HashPassword("Admin", BcryptWorkfactor),
                     Role = Role.Admin
                 }
                 // TO DO: Seed other users
