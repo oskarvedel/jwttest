@@ -4,7 +4,7 @@ import {Link, Redirect} from "react-router-dom";
 export class LogIn extends Component {
     constructor(props) {
         super(props);
-        this.state = {user: [], loading: true, username: null, password: null};
+        this.state = {user: [], loading: true, personaleId: null, password: null};
         this.state = {UserLoggedIn: false};
         this.state = {Error: false};
         this.state = {token: null}
@@ -26,13 +26,13 @@ export class LogIn extends Component {
         event.preventDefault();
 
         let user = {
-            userName: this.state.username,
+            userName: this.state.personaleId,
             password: this.state.password
         };
 
         let userStringified = JSON.stringify(user);
         const that = this;
-        fetch('/users/authenticate', {
+        fetch('api/user/login', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -79,8 +79,8 @@ export class LogIn extends Component {
                     return (
                         <form onSubmit={this.handleLogin}>
                             <label>
-                                Username:
-                                <input type="text" name='username' value={this.state.username || ""}
+                                Personale Id:
+                                <input type="text" name='personaleId' value={this.state.personaleId || ""}
                                        onChange={this.handleChange}/>
                             </label>
                             <label>

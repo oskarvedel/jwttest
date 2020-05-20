@@ -69,19 +69,19 @@ namespace RCCS_Auth_Test_Project
                 });
             // Add swagger Web.API documentation
             // Doc: https://docs.microsoft.com/da-dk/aspnet/core/tutorials/web-api-help-pages-using-swagger?view=aspnetcore-3.1
-            services.AddSwaggerGen(c =>
+            /*services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "GUI Assignment 3 Models",
+                    Title = "RCCS",
                     Version = "v1",
-                    Description = "API to manage models."
+                    Description = "RCCS User Api"
                 });
                 // Set the comments path for the Swagger JSON and UI.
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
                 var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
                 c.IncludeXmlComments(xmlPath);
-            });
+            });*/
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -124,12 +124,12 @@ namespace RCCS_Auth_Test_Project
                 .AllowAnyHeader()
                 .AllowCredentials());
 
-            app.UseSwagger();
+            /*app.UseSwagger();
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Models API V1");
-                c.RoutePrefix = string.Empty; // To serve the Swagger UI at the app's root
-            });
+                c.RoutePrefix = "/swagger"; // where to serve swagger
+            });*/
 
             app.UseRouting();
             app.UseAuthentication();

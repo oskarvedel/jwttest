@@ -111,19 +111,19 @@ namespace RCCS_Auth_Test_Project.Controllers
             }
 
             login.PersonaleId = login.PersonaleId.ToLowerInvariant();
-            var account = await _context.Users.Where(u => u.PersonaleId == login.PersonaleId)
+            var user = await _context.Users.Where(u => u.PersonaleId == login.PersonaleId)
                 .FirstOrDefaultAsync().ConfigureAwait(false);
 
-            if (account == null)
+            if (user == null)
             {
                 ModelState.AddModelError("email", "Not found!");
                 return BadRequest(ModelState);
             }
 
-            var validPwd = Verify(login.OldPassword, account.PwHash);
+            var validPwd = Verify(login.OldPassword, user.PwHash);
             if (validPwd)
             {
-                account.PwHash = HashPassword(login.Password, _appSettings.BcryptWorkfactor);
+                user.PwHash = HashPassword(login.Password, _appSettings.BcryptWorkfactor);
                 await _context.SaveChangesAsync().ConfigureAwait(false);
                 return Ok();
             }
