@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
+import {Link, Redirect} from "react-router-dom";
 
 export class LogIn extends Component {
     constructor(props) {
         super(props);
         this.state = {user: [], loading: true, username: null, password: null};
         this.state = {UserLoggedIn: false};
+        this.state = {Error: false};
         this.handleChange = this.handleChange.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
     }
+
 
     handleChange(event) {
         let nam = event.target.name;
@@ -17,6 +20,7 @@ export class LogIn extends Component {
 
     async handleLogin(event) {
         event.preventDefault();
+
         let user = {
             userName: this.state.username,
             password: this.state.password
@@ -32,23 +36,34 @@ export class LogIn extends Component {
             body: userStringified
         })
             .then(function (response) {
-                    if (response.ok) {
-                        response.json().then(function(data) {
-                            console.log(data["token"]);
-                            localStorage.setItem("token", data["token"]);
-                            console.log('Logged in');
-                            that.setState({
-                                UserLoggedIn: true
-                            });
+                if (response.ok) {
+                    response.json().then(function (data) {
+                        console.log(data["token"]);
+                        localStorage.setItem("token", data["token"]);
+                        //end of test field
+                        console.log('Logged in');
+                        that.setState({
+                            UserLoggedIn: true
                         });
-                    } else {
-                        alert("HTTP-Error: " + response.status);
-                        console.log('Error - not logged in');
-                    }
+                    });
+                } else {
+                    alert("HTTP-Error: " + response.status);
+                    console.log('Error - not logged in');
+                    that.setState({
+                        Error: true
+                    });
                 }
-            ).catch(error => console.error('Caught error:', error));
-    }
+            }).catch(error => {
+            console.error('Caught error:', error);
+            that.setState({
+                Error: true
+            });
+        });
 
+        if (this.state.UserLoggedIn) {
+            return <Redirect to="/"/>;
+        }
+    }
 
     render() {
         const UserLoggedIn = this.state.UserLoggedIn;

@@ -13,7 +13,7 @@ namespace RCCS_Auth_Test_Project
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
                 .ConfigureWebHostDefaults(webBuilder => { webBuilder.UseStartup<Startup>()
-                    .UseUrls("http://localhost:5000");
+                    .UseUrls("https://localhost:5001");
                     ; });
     }
 }
