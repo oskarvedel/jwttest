@@ -8,15 +8,12 @@ import {Home} from './components/Home';
 import {LogIn} from './components/LogIn';
 import {Register} from "./components/Register";
 import {ShowAllUsers} from "./components/ShowAllUsers";
-import {AuthContext} from "./components/Auth";
-
 
 export default class App extends Component {
     static displayName = App.name;
 
     render() {
         return (
-            <AuthContext.Provider value={false}>
                 <Router>
                     <div>
                         <ul>
@@ -39,7 +36,6 @@ export default class App extends Component {
                         <PrivateRoute path='/show-all-users' component={ShowAllUsers}/>
                     </div>
                 </Router>
-            </AuthContext.Provider>
         );
     }
 }

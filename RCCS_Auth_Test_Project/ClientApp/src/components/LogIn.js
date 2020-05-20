@@ -7,10 +7,14 @@ export class LogIn extends Component {
         this.state = {user: [], loading: true, username: null, password: null};
         this.state = {UserLoggedIn: false};
         this.state = {Error: false};
+        this.state = {token: null}
         this.handleChange = this.handleChange.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
     }
 
+    componentDidMount() {
+
+    }
 
     handleChange(event) {
         let nam = event.target.name;

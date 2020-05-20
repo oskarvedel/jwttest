@@ -1,17 +1,16 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
-import { useAuth } from "./Auth";
+import { getAuth } from "./Auth";
 import Redirect from "react-router-dom/Redirect";
 
 function PrivateRoute({component: Component, ...rest}) {
-    const { authTokens } = useAuth();
-
+    let auth = getAuth();
 
     return (
         <Route
             {...rest}
             render={props =>
-                authTokens ? (
+                auth ? (
                     <Component {...props} />
                 ) : (
                     <Redirect to="log-in" />
