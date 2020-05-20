@@ -34,7 +34,7 @@ namespace RCCS_Auth_Test_Project
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            //services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
+            services.AddSpaStaticFiles(configuration => { configuration.RootPath = "ClientApp/build"; });
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddCors();
             services.AddDbContext<ApplicationDbContext>(options =>
@@ -65,8 +65,7 @@ namespace RCCS_Auth_Test_Project
                         ValidateAudience = false
                     };
                 });
-            // Add swagger Web.API documentation
-            // Doc: https://docs.microsoft.com/da-dk/aspnet/core/tutorials/web-api-help-pages-using-swagger?view=aspnetcore-3.1
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
@@ -75,10 +74,6 @@ namespace RCCS_Auth_Test_Project
                     Version = "v1",
                     Description = "API to manage models."
                 });
-                // Set the comments path for the Swagger JSON and UI.
-                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
-                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-                c.IncludeXmlComments(xmlPath);
             });
         }
 
@@ -107,7 +102,6 @@ namespace RCCS_Auth_Test_Project
             app.UseSwaggerUI(c =>
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Models API V1");
-                c.RoutePrefix = string.Empty; // To serve the Swagger UI at the app's root
             });
 
             app.UseRouting();
@@ -122,7 +116,7 @@ namespace RCCS_Auth_Test_Project
 
             DbUtilities.SeedUsers(context);
 
-            /*app.UseSpa(spa =>
+            app.UseSpa(spa =>
             {
                 spa.Options.SourcePath = "ClientApp";
 
@@ -130,7 +124,7 @@ namespace RCCS_Auth_Test_Project
                 {
                     spa.UseReactDevelopmentServer(npmScript: "start");
                 }
-            });*/
+            });
         }
     }
 }
