@@ -3,7 +3,7 @@ import {Component, createContext, useContext} from 'react';
 export function setAuth(props) {
 }
 
-export function getAuth() {
+function Auth() {
     const jwt = localStorage.getItem('token')
     let jwtParsed;
     let rolle;
@@ -17,10 +17,36 @@ export function getAuth() {
             } else {
                 rolle = "Manager"
             }
-            console.log(rolle)
+            //console.log(rolle)
+            console.log(decodedData)
         }
     } catch (error) {
         console.log(error)
     }
     return false;
+}
+
+export function getRole() {
+    const jwt = localStorage.getItem('jwt')
+    let jwtParsed;
+    let rolle;
+    try {
+        if (jwt) {
+            let jwtData = jwt.split('.')[1]
+            let decoded = window.atob(jwtData)
+            let decodedData = JSON.parse(decoded)
+            console.log(decodedData)
+            switch (decodedData['RoleClearText']) {
+                case "Admin":
+                    rolle = "Admin"
+                    console.log("getRole says: Role is" + rolle)
+                case "Coordinator":
+                    rolle = "Coordinator"
+                    console.log("getRole says: Role is " + rolle)
+            }
+        }
+    } catch (error) {
+        console.log(error)
+    }
+    return rolle;
 }

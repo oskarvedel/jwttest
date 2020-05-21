@@ -36,7 +36,7 @@ namespace RCCS_Auth_Test_Project.Controllers
         [HttpPost("login"), AllowAnonymous]
         public async Task<ActionResult<Token>> Login([FromBody] Login login)
         {
-            Console.WriteLine("user trying to log in");
+            Console.WriteLine("LoginController activated");
             if (login != null) //check if email, username and password were entered
             {
                 //find user by personaleId
@@ -48,37 +48,46 @@ namespace RCCS_Auth_Test_Project.Controllers
                     var validPwd = Verify(login.Password, user.PwHash);
                     if (validPwd)
                     {
+                        Console.WriteLine("Password valid");
                         long userID = 0;
-                        if (user.Role == Role.Admin)
+                        switch (user.Role)
                         {
-                            var admin = await _context.Admins.Where(m => m.EfUserId == user.EfUserId)
-                                .FirstOrDefaultAsync().ConfigureAwait(false);
-                            if (admin != null)
+                            case Role.Admin:
                             {
-                                userID = admin.EfAdminId;
+                                Console.WriteLine("User logging in is Admin");
+                                var admin = await _context.Admins.Where(m => m.EfUserId == user.EfUserId)
+                                    .FirstOrDefaultAsync().ConfigureAwait(false);
+                                if (admin != null)
+                                {
+                                    userID = admin.EfAdminId;
+                                }
+                                break;
+                            }
+                            case Role.Coordinator:
+                            {
+                                Console.WriteLine("User logging in is Coordinator");
+                                var coordinator = await _context.Coordinators.Where(m => m.EfUserId == user.EfUserId)
+                                    .FirstOrDefaultAsync().ConfigureAwait(false);
+                                if (coordinator != null)
+                                {
+                                    userID = coordinator.EfCoordinatorId;
+                                }
+
+                                break;
+                            }
+                            case Role.NursingStaff:
+                            {
+                                Console.WriteLine("User logging in is Nursing Staff");
+                                var nursingStaff = await _context.NursingStaffs.Where(m => m.EfUserId == user.EfUserId)
+                                    .FirstOrDefaultAsync().ConfigureAwait(false);
+                                if (nursingStaff != null)
+                                {
+                                    userID = nursingStaff.EfNursingStaffId;
+                                }
+                                break;
                             }
                         }
-
-                        if (user.Role == Role.Coordinator)
-                        {
-                            var coordinator = await _context.Coordinators.Where(m => m.EfUserId == user.EfUserId)
-                                .FirstOrDefaultAsync().ConfigureAwait(false);
-                            if (coordinator != null)
-                            {
-                                userID = coordinator.EfCoordinatorId;
-                            }
-                        }
-
-                        if (user.Role == Role.NursingStaff)
-                        {
-                            var nursingStaff = await _context.NursingStaffs.Where(m => m.EfUserId == user.EfUserId)
-                                .FirstOrDefaultAsync().ConfigureAwait(false);
-                            if (nursingStaff != null)
-                            {
-                                userID = nursingStaff.EfNursingStaffId;
-                            }
-                        }
-
+                        Console.WriteLine("Generating token with personale ID: " + user.PersonaleId + ", User Id: " + userID + " and Role: " + user.Role);
                         var jwt = GenerateToken(user.PersonaleId, userID, user.Role);
                         var token = new Token() {JWT = jwt};
                         return token;
@@ -128,20 +137,20 @@ namespace RCCS_Auth_Test_Project.Controllers
             }
         }
 
-        private string GenerateToken(string email, long userId, Role role)
+        private string GenerateToken(string personaleId, long userId, Role role)
         {
-            Claim roleClaim;
-            if (role == Role.Admin)
-                roleClaim = new Claim(ClaimTypes.Role, "Admin");
-            else if (role == Role.Coordinator)
-                roleClaim = new Claim(ClaimTypes.Role, "Coordinator");
-            else
-                roleClaim = new Claim(ClaimTypes.Role, "NursingStaff");
+            Claim roleClaim = role switch
+            {
+                Role.Admin => new Claim(ClaimTypes.Role, "Admin"),
+                Role.Coordinator => new Claim(ClaimTypes.Role, "Coordinator"),
+                _ => new Claim(ClaimTypes.Role, "NursingStaff")
+            };
 
             var claims = new Claim[]
             {
-                new Claim(ClaimTypes.Email, email),
+                new Claim(ClaimTypes.Name, personaleId),
                 roleClaim,
+                new Claim("RoleClearText", role.ToString()),
                 new Claim("UserId", userId.ToString()),
                 new Claim(JwtRegisteredClaimNames.Nbf, new DateTimeOffset(DateTime.Now).ToUnixTimeSeconds().ToString()),
                 new Claim(JwtRegisteredClaimNames.Exp,

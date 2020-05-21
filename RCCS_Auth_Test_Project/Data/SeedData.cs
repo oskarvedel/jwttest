@@ -16,6 +16,8 @@ namespace RCCS_Auth_Test_Project.Data
                 SeedAccounts(context);
             if (!context.Admins.Any())
                 SeedAdmins(context);
+            if (!context.Coordinators.Any())
+                SeedCoordinators(context);
         }
 
         static void SeedAccounts(ApplicationDbContext context)
@@ -27,6 +29,13 @@ namespace RCCS_Auth_Test_Project.Data
                     PersonaleId = "Admin",
                     PwHash = HashPassword("Admin", BcryptWorkfactor),
                     Role = Role.Admin
+                },
+            // Seed Coordinator
+            new EfUser
+                {
+                    PersonaleId = "Coordinator",
+                    PwHash = HashPassword("Coordinator", BcryptWorkfactor),
+                    Role = Role.Coordinator
                 }
                 // TO DO: Seed other users
             );
@@ -45,6 +54,19 @@ namespace RCCS_Auth_Test_Project.Data
 
                 });
                 context.SaveChanges();
+        }
+        static void SeedCoordinators(ApplicationDbContext context)
+        {
+            context.Coordinators.Add(
+                new EfCoordinator()
+                {
+                    EfUserId = 2,
+                    PersonaleId = "Coordinator",
+                    FirstName = "CoordinatorFirstName",
+                    LastName = "CoordinatorLastName",
+
+                });
+            context.SaveChanges();
         }
     }
 }

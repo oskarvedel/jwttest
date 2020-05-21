@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {BrowserRouter as Router, Link, Route} from "react-router-dom";
-import PrivateRoute from './components/PrivateRoute';
+import AdminRoute from './components/AdminRoute';
+import CoordinatorRoute from './components/CoordinatorRoute';
+//import NursingStaffRoute from './components/NursingStaffRoute';
 import './custom.css'
 
 import {Layout} from './components/Layout';
@@ -14,28 +16,28 @@ export default class App extends Component {
 
     render() {
         return (
-                <Router>
-                    <div>
-                        <ul>
-                            <li>
-                                <Link to="/">Home Page</Link>
-                            </li>
-                            <li>
-                                <Link to="/log-in">Login page</Link>
-                            </li>
-                            <li>
-                                <Link to="/register">Register</Link>
-                            </li>
-                            <li>
-                                <Link to="/show-all-users">Show All Users</Link>
-                            </li>
-                        </ul>
-                        <Route exact path="/" component={Home}/>
-                        <Route path='/log-in' component={LogIn}/>
-                        <Route path='/register' component={Register}/>
-                        <PrivateRoute path='/show-all-users' component={ShowAllUsers}/>
-                    </div>
-                </Router>
+            <Router>
+                <div>
+                    <ul>
+                        <li>
+                            <Link to="/">Home Page</Link>
+                        </li>
+                        <li>
+                            <Link to="/log-in">Login page</Link>
+                        </li>
+                        <li>
+                            <Link to="/register">Register</Link>
+                        </li>
+                        <li>
+                            <Link to="/show-all-users">Show All Users</Link>
+                        </li>
+                    </ul>
+                    <Route exact path="/" component={Home}/>
+                    <Route path='/log-in' component={LogIn}/>
+                    <AdminRoute path='/register' component={Register}/>
+                    <CoordinatorRoute path='/show-all-users' component={ShowAllUsers}/>
+                </div>
+            </Router>
         );
     }
 }

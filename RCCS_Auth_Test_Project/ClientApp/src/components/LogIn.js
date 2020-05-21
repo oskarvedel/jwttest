@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Link, Redirect} from "react-router-dom";
+import {getRole} from "./Auth";
 
 export class LogIn extends Component {
     constructor(props) {
@@ -42,13 +43,15 @@ export class LogIn extends Component {
             .then(function (response) {
                 if (response.ok) {
                     response.json().then(function (data) {
-                        console.log(data["token"]);
-                        localStorage.setItem("token", data["token"]);
+                        console.log("json: " + data);
+                        console.log("jwt: " + data["jwt"]);
+                        localStorage.setItem("jwt", data["jwt"]);
                         //end of test field
                         console.log('Logged in');
                         that.setState({
                             UserLoggedIn: true
                         });
+                        getRole();
                     });
                 } else {
                     alert("HTTP-Error: " + response.status);
@@ -67,6 +70,7 @@ export class LogIn extends Component {
         if (this.state.UserLoggedIn) {
             return <Redirect to="/"/>;
         }
+
     }
 
     render() {
