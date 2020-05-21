@@ -40,9 +40,11 @@ export function getRole() {
                 case "Admin":
                     rolle = "Admin"
                     console.log("getRole says: Role is" + rolle)
+                    break;
                 case "Coordinator":
                     rolle = "Coordinator"
                     console.log("getRole says: Role is " + rolle)
+                    break;
             }
         }
     } catch (error) {

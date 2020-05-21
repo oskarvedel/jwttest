@@ -1,10 +1,11 @@
 import React from 'react';
 import {Route} from 'react-router-dom';
 import {getRole} from "./Auth";
+import Redirect from "react-router-dom/Redirect";
 
 function NursingStaffRoute({component: Component, ...rest}) {
-    let auth = getRole();
-    switch (auth) {
+    let role = getRole();
+    switch (role) {
         case "Admin": {
             return (
                 <Route
@@ -15,6 +16,7 @@ function NursingStaffRoute({component: Component, ...rest}) {
                         )
                     }
                 />);
+            break;
         }
         case "Coordinator": {
             console.log('coordinator privateroute enabled');
@@ -27,6 +29,7 @@ function NursingStaffRoute({component: Component, ...rest}) {
                         )
                     }
                 />);
+            break;
         }
         case "NursingStaff": {
             console.log('NursingStaff privateroute enabled');
@@ -39,6 +42,19 @@ function NursingStaffRoute({component: Component, ...rest}) {
                         )
                     }
                 />);
+            break;
+        }
+        default: {
+            return (
+                <Route
+                    {...rest}
+                    render={props =>
+                        (
+                            <Redirect to="log-in"/>
+                        )
+                    }
+                />);
+            break;
         }
     }
 }
